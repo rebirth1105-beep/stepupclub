@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>STEP UP CLUB | 스텝업클럽</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="STEP UP CLUB | 스텝업클럽 — 함께 한 단계씩 성장하는 사람들의 소셜클럽">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 멤버십 클럽 무드. 히어로에 실물 같은 회원카드, 이후 섹션은 넓은 여백 + 벤토 카드 + 티켓형 멤버십. */
+:root {
+  --bg: #FFF8EE;
+  --paper: #FFFCF7;
+  --ink: #2B2420;
+  --ink-2: #5E5248;
+  --ink-3: #9A8B7C;
+  --line: #F0E2CF;
+  --green: #D2733F;        /* 포인트: 해 뜨는 주황 (배경·버튼) */
+  --accent-ink: #A85A30;   /* 포인트 글자용 진한 주황 */
+  --green-soft: #F5E4D5;
+  --sprout: #5E9E2F;       /* 보조: 새싹 연두 */
+  --sprout-soft: #E6F2D8;
+  --on-dark: #FFF4E8;
+  --on-dark-2: #CDB9A6;
+  --dark: #3A2E26;
+  --dark-line: #54453A;
+  --kr: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --en: "Hanken Grotesk", "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  --r-lg: 28px;
+  --r-md: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #18130F; --paper: #221B16; --ink: #F5ECE2; --ink-2: #C7B8A9; --ink-3: #93847A; --line: #33291F;
+    --green: #C97A4E; --accent-ink: #E5A47E; --green-soft: #33241A; --sprout: #9BD06A; --sprout-soft: #22301A;
+    --on-dark: #F5ECE2; --on-dark-2: #B5A595; --dark: #2C221B; --dark-line: #46382D;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #18130F; --paper: #221B16; --ink: #F5ECE2; --ink-2: #C7B8A9; --ink-3: #93847A; --line: #33291F;
+  --green: #C97A4E; --accent-ink: #E5A47E; --green-soft: #33241A; --sprout: #9BD06A; --sprout-soft: #22301A;
+  --on-dark: #F5ECE2; --on-dark-2: #B5A595; --dark: #2C221B; --dark-line: #46382D;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--kr); font-size: 17px; line-height: 1.7; letter-spacing: -0.015em;
+  word-break: keep-all; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; font-weight: 700; }
+p { text-wrap: pretty; }
+ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.en { font-family: var(--en); letter-spacing: 0; }
+
+/* ---------- Header ---------- */
+.header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; padding-block: 14px; }
+.header-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  height: 60px; padding: 0 10px 0 22px; border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--en); font-weight: 700; font-size: 17px; letter-spacing: 0.02em; }
+.logo-mark { width: 22px; height: 22px; flex: none; }
+.logo-short { display: none; }
+@media (max-width: 680px) { .logo-full { display: none; } .logo-short { display: inline; } }
+.nav { display: flex; gap: 30px; font-size: 15px; color: var(--ink-2); }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  height: 56px; padding: 0 12px 0 28px; border-radius: 999px; border: 0;
+  background: var(--ink); color: var(--bg);
+  font: inherit; font-weight: 600; font-size: 16px; text-decoration: none; cursor: pointer;
+  transition: transform .2s ease;
+}
+.btn-arrow {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg); color: var(--ink); font-size: 15px;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--sm { height: 42px; padding: 0 20px; font-size: 14px; }
+.btn--light { background: var(--on-dark); color: var(--dark); }
+.btn--light .btn-arrow { background: var(--dark); color: var(--on-dark); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+
+/* ---------- Section head ---------- */
+.section { padding-block: clamp(80px, 11vw, 150px); }
+.head { display: grid; gap: 18px; margin-bottom: clamp(40px, 6vw, 64px); max-width: 720px; }
+.label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
+}
+.label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+.title { font-size: clamp(30px, 4.4vw, 50px); line-height: 1.22; letter-spacing: -0.045em; }
+.lead { color: var(--ink-2); font-size: clamp(16px, 1.6vw, 18px); max-width: 36em; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(40px, 7vw, 96px) clamp(72px, 10vw, 128px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(40px, 6vw, 80px); align-items: center; }
+.hero-kicker { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink-2); }
+.hero h1 { margin-top: 22px; font-family: var(--en); font-weight: 700; font-size: clamp(44px, 6.6vw, 92px); line-height: 1; letter-spacing: -0.045em; }
+.hero-sub em { font-style: normal; color: var(--accent-ink); }
+.hero-sub { margin-top: 22px; font-size: clamp(20px, 2.3vw, 26px); font-weight: 600; letter-spacing: -0.04em; }
+.hero-slogan { margin-top: 12px; color: var(--ink-2); font-size: clamp(16px, 1.6vw, 18px); max-width: 26em; }
+.hero-actions { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+.hero-note { font-size: 15px; color: var(--ink-2); }
+.hero-note b { color: var(--accent-ink); font-weight: 700; }
+
+/* membership card object */
+.card-stage { position: relative; display: grid; place-items: center; padding: 24px 0; min-width: 0; }
+.card-stage::before {
+  content: ""; position: absolute; inset: 6% 2% 6% 10%;
+  border-radius: 40px; background: var(--sprout-soft);
+}
+.mcard {
+  position: relative; width: min(100%, 440px); aspect-ratio: 1.586; max-width: 100%;
+  border-radius: 22px; padding: clamp(20px, 3vw, 28px);
+  background: radial-gradient(120% 140% at 0% 0%, #34322D 0%, #1B1A17 60%);
+  color: #F4EFE6;
+  box-shadow: 0 40px 60px -30px rgba(30, 29, 26, .55), 0 2px 0 rgba(255,255,255,.06) inset;
+  transform: rotate(-5deg);
+  display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+}
+.mcard-net { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; pointer-events: none; }
+.mcard-top, .mcard-bottom { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.mcard-brand { font-family: var(--en); font-weight: 700; font-size: clamp(18px, 2.2vw, 22px); letter-spacing: 0.02em; }
+.mcard-brand small { display: block; font-family: var(--kr); font-weight: 500; font-size: 12px; letter-spacing: 0.04em; color: #A9A397; margin-top: 2px; }
+.mcard-chip { width: 40px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, #C9BC9C, #8E8366); }
+.mcard-name { font-size: clamp(15px, 1.8vw, 17px); color: #D9D3C7; }
+.mcard-meta { font-family: var(--en); font-size: 11px; letter-spacing: 0.14em; color: #A9A397; text-align: right; line-height: 1.6; }
+.mcard-meta b { display: block; font-size: 15px; color: #F4EFE6; letter-spacing: 0.04em; font-weight: 600; }
+
+/* hero host */
+.host { display: flex; align-items: center; gap: 12px; }
+.host img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; object-position: 50% 12%; border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--line); }
+.host p { font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.host b { display: block; color: var(--ink); font-size: 15px; font-weight: 600; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; margin-left: 12px; padding: 4px 12px; border-radius: 999px; background: var(--sprout-soft); color: var(--sprout); font-family: var(--kr); font-size: 13px; font-weight: 600; letter-spacing: -0.01em; text-transform: none; vertical-align: middle; }
+
+/* ---------- Leader ---------- */
+.leader { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+.leader-photo { position: relative; margin: 0; border-radius: var(--r-lg); overflow: hidden; background: var(--paper); aspect-ratio: 4 / 5; max-width: 100%; }
+.leader-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; display: block; }
+.leader-photo figcaption {
+  position: absolute; left: 16px; bottom: 16px; padding: 8px 14px; border-radius: 999px;
+  background: rgba(58, 46, 38, .82); color: #FFF4E8; font-size: 13px; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.leader-body { display: grid; gap: 28px; min-width: 0; padding-top: 8px; }
+.leader-role { font-size: 15px; font-weight: 600; color: var(--accent-ink); }
+.leader-name { font-size: clamp(56px, 8vw, 104px); line-height: 1; letter-spacing: -0.065em; margin-top: 10px; }
+.leader-tagline { font-size: clamp(20px, 2.2vw, 26px); font-weight: 600; line-height: 1.45; letter-spacing: -0.04em; max-width: 20em; }
+.leader-bio { display: grid; gap: 14px; color: var(--ink-2); max-width: 36em; }
+
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: clamp(48px, 7vw, 80px); border-top: 2px solid var(--ink); }
+.stat { padding: 22px 18px 0 0; display: grid; gap: 8px; align-content: start; }
+.stat + .stat { padding-left: 18px; border-left: 1px solid var(--line); }
+.stat-v { font-family: var(--en); font-size: clamp(34px, 3.6vw, 48px); font-weight: 600; line-height: 1; letter-spacing: -0.04em; white-space: nowrap; }
+.stat-v small { font-family: var(--kr); font-size: .45em; font-weight: 600; margin-left: 2px; letter-spacing: -0.02em; }
+.stat-k { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+
+.leader-more { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 14px; margin-top: clamp(40px, 6vw, 64px); }
+.quote { background: var(--dark); color: var(--on-dark); border-radius: var(--r-md); padding: clamp(28px, 3.6vw, 40px); display: grid; gap: 28px; align-content: space-between; }
+.quote p { font-size: clamp(21px, 2.3vw, 27px); font-weight: 600; line-height: 1.5; letter-spacing: -0.04em; }
+.quote em { font-style: normal; color: #E9B18C; }
+.quote cite { font-style: normal; font-size: 14px; color: var(--on-dark-2); }
+.career { background: var(--paper); border-radius: var(--r-md); padding: clamp(28px, 3.6vw, 40px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+.career h3 { font-family: var(--en); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+.career li { padding-block: 10px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.5; }
+.career li b { font-weight: 600; }
+.career li span { display: block; color: var(--ink-3); font-size: 13px; margin-top: 2px; }
+
+/* ---------- About ---------- */
+.about { background: var(--paper); border-radius: var(--r-lg); padding: clamp(36px, 6vw, 80px); display: grid; gap: clamp(40px, 6vw, 64px); }
+.about-statement { font-size: clamp(24px, 3.3vw, 40px); font-weight: 600; line-height: 1.45; letter-spacing: -0.045em; max-width: 22em; }
+.about-statement em { font-style: normal; color: var(--accent-ink); }
+.about-foot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: end; padding-top: 32px; border-top: 1px solid var(--line); }
+.about-years { display: flex; align-items: flex-end; gap: 14px; }
+.about-years strong { font-family: var(--en); font-weight: 600; font-size: clamp(72px, 9vw, 112px); line-height: .85; letter-spacing: -0.05em; }
+.about-years span { color: var(--ink-2); font-size: 15px; line-height: 1.5; padding-bottom: 6px; }
+.about-body { color: var(--ink-2); max-width: 34em; }
+
+/* ---------- Fields band ---------- */
+.fields { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; font-size: clamp(30px, 5.6vw, 72px); font-weight: 700; letter-spacing: -0.05em; line-height: 1.3; }
+.fields li { display: inline-flex; align-items: center; }
+.fields li:nth-child(even) { color: var(--ink-3); }
+.fields li:not(:last-child)::after { content: ""; width: .18em; height: .18em; border-radius: 50%; background: var(--sprout); margin: 0 .38em; }
+
+/* ---------- Benefits ---------- */
+.benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.benefit {
+  background: var(--paper); border-radius: var(--r-md); padding: 30px 28px 32px;
+  display: grid; gap: 40px; align-content: space-between; min-height: 220px;
+}
+.benefit-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--bg); display: grid; place-items: center; color: var(--accent-ink); }
+.benefit-icon svg { width: 24px; height: 24px; }
+.benefit h3 { font-size: 19px; line-height: 1.45; letter-spacing: -0.035em; font-weight: 600; }
+.benefit-desc { margin-top: 10px; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.benefit--feature .benefit-desc { color: color-mix(in srgb, var(--paper) 85%, transparent); }
+.benefit-tag { display: block; font-size: 13px; color: var(--ink-3); margin-bottom: 6px; font-weight: 500; }
+.benefit--feature { background: var(--green); color: var(--paper); }
+.benefit--feature .benefit-icon { background: color-mix(in srgb, var(--paper) 14%, transparent); color: var(--paper); }
+.benefit--feature .benefit-tag { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+
+/* ---------- Programs (bento) ---------- */
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.prog { background: var(--paper); border-radius: var(--r-md); padding: 26px; display: grid; gap: 28px; align-content: space-between; min-width: 0; min-height: 210px; }
+.prog-status { justify-self: start; font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: var(--bg); color: var(--ink-3); }
+.prog h3 { font-size: 19px; letter-spacing: -0.035em; font-weight: 600; line-height: 1.4; }
+.prog p { color: var(--ink-2); font-size: 15px; margin-top: 6px; line-height: 1.6; }
+.prog--main {
+  grid-column: span 2; grid-row: span 2;
+  background: var(--dark); color: var(--on-dark); padding: clamp(28px, 3.6vw, 40px);
+}
+.prog--main .prog-status { background: var(--green); color: #fff; }
+.prog--main h3 { font-size: clamp(26px, 3vw, 36px); font-weight: 700; letter-spacing: -0.05em; line-height: 1.25; }
+.prog--main p { color: var(--on-dark-2); font-size: 17px; margin-top: 12px; max-width: 22em; }
+.price { display: grid; gap: 14px; padding-top: 24px; border-top: 1px solid var(--dark-line); font-variant-numeric: tabular-nums; }
+.price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.price-k { font-size: 15px; color: var(--on-dark-2); }
+.price-old { font-family: var(--en); font-size: 18px; color: var(--on-dark-2); text-decoration: line-through; }
+.price-new { font-family: var(--en); font-size: clamp(36px, 4vw, 48px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+.price-new small { font-family: var(--kr); font-size: 18px; font-weight: 600; margin-left: 2px; }
+.price-save { justify-self: end; font-size: 13px; font-weight: 600; color: var(--dark); background: var(--on-dark); padding: 5px 12px; border-radius: 999px; }
+
+.topics { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 24px; border-top: 1px solid var(--dark-line); }
+.topics-k { width: 100%; font-size: 13px; color: var(--on-dark-2); margin-bottom: 4px; }
+.topic { padding: 8px 15px; border-radius: 999px; border: 1px solid var(--dark-line); font-size: 14px; font-weight: 500; }
+.prog-en { font-family: var(--en); letter-spacing: 0.02em; }
+
+/* ---------- Criteria (keys + principles) ---------- */
+.keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.key { background: var(--paper); border-radius: var(--r-md); padding: 28px 26px 30px; display: grid; gap: 40px; align-content: space-between; min-height: 240px; min-width: 0; }
+.key-en { font-family: var(--en); font-size: clamp(26px, 2.6vw, 32px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: var(--accent-ink); }
+.key h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.035em; }
+.key p { color: var(--ink-2); font-size: 15px; line-height: 1.6; margin-top: 6px; min-height: 3.2em; }
+.prog:not(.prog--main) p { min-height: 3.2em; }
+.rules { margin-top: 14px; background: var(--dark); color: var(--on-dark); border-radius: var(--r-md); padding: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; align-items: start; }
+.rules .label { color: var(--on-dark-2); }
+.rules h3 { font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.045em; margin-top: 14px; line-height: 1.35; }
+.rules li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 14px; align-items: start; padding-block: 16px; border-top: 1px solid var(--dark-line); font-size: 17px; font-weight: 500; }
+.rules li:first-child { border-top: 0; padding-top: 0; }
+.rules li:last-child { padding-bottom: 0; }
+.rules .crit-mark { border: 1px solid var(--on-dark-2); color: var(--on-dark-2); }
+
+/* ---------- Participation ---------- */
+.criteria { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.crit { border-radius: var(--r-md); padding: clamp(28px, 3.6vw, 40px); display: grid; gap: 24px; align-content: start; }
+.crit--yes { background: var(--paper); }
+.crit--no { border: 1px solid var(--line); }
+.crit h3 { font-size: 21px; letter-spacing: -0.04em; }
+.crit ul { display: grid; }
+.crit li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px; align-items: start; padding-block: 16px; border-top: 1px solid var(--line); }
+.crit li:last-child { padding-bottom: 0; }
+.crit-mark { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; margin-top: 1px; }
+.crit-mark svg { width: 14px; height: 14px; }
+.crit--yes .crit-mark { background: var(--green); color: var(--paper); }
+.crit--no .crit-mark { border: 1px solid var(--ink-3); color: var(--ink-3); }
+.crit--no li span:last-child { color: var(--ink-2); }
+
+/* ---------- Membership ticket ---------- */
+.ticket { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); background: var(--paper); border-radius: var(--r-lg); position: relative; }
+.ticket-main { padding: clamp(32px, 5vw, 56px); display: grid; gap: 10px; align-content: center; border-radius: var(--r-lg) 0 0 var(--r-lg);
+  background: radial-gradient(120% 140% at 0% 0%, #34322D 0%, #1B1A17 65%); color: #F4EFE6; }
+.ticket-month { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; color: #D8C69C; display: flex; align-items: center; gap: 10px; }
+.ticket-month::before { content: ""; width: 22px; height: 1px; background: #D8C69C; }
+.ticket-until { margin-top: 14px; padding-top: 18px; border-top: 1px solid rgba(216, 198, 156, .3); font-family: var(--en); font-size: 13px; letter-spacing: 0.12em; color: #D8C69C; }
+.ticket-price { font-family: var(--en); font-size: clamp(80px, 11vw, 140px); font-weight: 600; line-height: .9; letter-spacing: -0.06em; }
+.ticket-price small { font-family: var(--kr); font-size: .3em; letter-spacing: -0.03em; margin-left: 4px; }
+.ticket-cap { color: #BDB6A9; }
+.ticket-price--kr { font-family: var(--en); font-weight: 700; font-size: clamp(46px, 6.4vw, 84px); line-height: 1.1; letter-spacing: -0.06em; margin-block: 6px 4px; }
+.ticket-side { padding: clamp(32px, 5vw, 56px); border-left: 2px dashed var(--line); display: grid; align-content: center; }
+.ticket-side li { display: grid; gap: 4px; padding-block: 20px; border-bottom: 1px solid var(--line); }
+.ticket-side li:first-child { padding-top: 0; }
+.ticket-side li:last-child { border-bottom: 0; padding-bottom: 0; }
+.ticket-side b { font-size: 19px; font-weight: 600; letter-spacing: -0.035em; }
+.ticket-side span { color: var(--ink-2); font-size: 15px; }
+.ticket::before, .ticket::after {
+  content: ""; position: absolute; left: calc(100% / 2.2 - 14px); width: 28px; height: 28px; border-radius: 50%; background: var(--bg);
+}
+.ticket::before { top: -14px; }
+.ticket::after { bottom: -14px; }
+
+/* ---------- Final CTA ---------- */
+.final { background: var(--dark); color: var(--on-dark); border-radius: var(--r-lg); padding: clamp(40px, 7vw, 96px) clamp(28px, 6vw, 80px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 56px; align-items: end; }
+.final .label { color: var(--on-dark-2); }
+.final h2 { margin-top: 22px; font-size: clamp(34px, 5vw, 60px); line-height: 1.18; letter-spacing: -0.055em; }
+.final .btn { margin-top: 40px; }
+.contact { display: grid; }
+.contact-row { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding-block: 16px; border-bottom: 1px solid var(--dark-line); }
+.contact-row:first-child { border-top: 1px solid var(--dark-line); }
+.contact-k { font-size: 14px; color: var(--on-dark-2); }
+.contact-v { font-weight: 500; overflow-wrap: anywhere; }
+.contact-v a { text-underline-offset: 4px; }
+.contact-v.is-empty { color: var(--on-dark-2); font-weight: 400; }
+.copy-btn { font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 999px; cursor: pointer; background: transparent; color: var(--on-dark); border: 1px solid var(--dark-line); }
+
+.footer { padding-block: 36px 48px; font-size: 14px; color: var(--ink-3); }
+.footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+/* ---------- Responsive ---------- */
+/* ---------- Footprints gallery ---------- */
+.footprints { margin-top: clamp(64px, 9vw, 120px); }
+.footprints .head { margin-bottom: clamp(28px, 4vw, 40px); }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.shot { position: relative; margin: 0; border-radius: var(--r-md); overflow: hidden; background: var(--paper); aspect-ratio: 3 / 2; min-width: 0; }
+.shot--big { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shot--big img { position: absolute; inset: 0; }
+.shot figcaption {
+  position: absolute; left: 12px; bottom: 12px; right: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
+  width: fit-content; max-width: calc(100% - 24px); padding: 7px 13px; border-radius: 999px;
+  background: rgba(58, 46, 38, .82); color: #FFF4E8; font-size: 13px; font-weight: 600; line-height: 1.4;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.shot figcaption span { font-family: var(--en); font-weight: 500; color: #D8C69C; }
+.shot a { display: block; width: 100%; height: 100%; color: inherit; text-decoration: none; }
+.shot figcaption .shot-link { font-family: var(--kr); color: #FFF4E8; opacity: .8; }
+.shot a:hover img { opacity: .92; }
+@media (max-width: 1000px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .shot--big { grid-row: auto; aspect-ratio: 3 / 2; }
+  .shot:last-child { grid-column: span 2; }
+}
+@media (max-width: 680px) {
+  .gallery { gap: 10px; }
+  .shot figcaption { left: 0; right: 0; bottom: 0; width: auto; max-width: none; border-radius: 0; padding: 22px 10px 8px; font-size: 12px; gap: 0 6px; background: linear-gradient(transparent, rgba(30, 22, 16, .78)); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+@media (max-width: 1000px) {
+  .nav { display: none; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .card-stage { padding: 32px 0 8px; }
+  .benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .prog--main { grid-row: auto; }
+  .final { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .leader { grid-template-columns: minmax(0, 1fr); }
+  .leader-photo { max-width: 520px; }
+  .stats { grid-template-columns: minmax(0, 1fr); border-top-width: 2px; }
+  .stat, .stat + .stat { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); grid-template-columns: 150px minmax(0, 1fr); align-items: center; }
+  .leader-more { grid-template-columns: minmax(0, 1fr); }
+  .keys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rules { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .header-bar { padding-left: 18px; height: 56px; }
+  .benefits, .bento, .criteria { grid-template-columns: minmax(0, 1fr); }
+  .prog--main { grid-column: auto; }
+  .benefit, .prog { min-height: 0; gap: 28px; }
+  .about-foot { grid-template-columns: minmax(0, 1fr); }
+  .hero-actions .btn { width: 100%; justify-content: space-between; }
+  .ticket { grid-template-columns: minmax(0, 1fr); }
+  .ticket-main { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .ticket-side { border-left: 0; border-top: 2px dashed var(--line); }
+  .ticket::before, .ticket::after { display: none; }
+  .contact-row { grid-template-columns: 68px minmax(0, 1fr) auto; }
+  .career { grid-template-columns: minmax(0, 1fr); }
+  .keys { grid-template-columns: minmax(0, 1fr); }
+  .key { min-height: 0; gap: 24px; }
+  .stat, .stat + .stat { grid-template-columns: 116px minmax(0, 1fr); }
+  .hero-badge { margin: 0 0 0 0; }
+  .hero-kicker { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+}
+</style>
+
+<header class="header">
+  <div class="wrap">
+    <div class="header-bar">
+      <a class="logo" href="#top">
+        <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h5v-5h5v-5h5V5h3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="logo-full" data-text="brand.name"></span><span class="logo-short" data-text="brand.short"></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="섹션 이동"></nav>
+      <a class="btn btn--sm" data-join href="#join" data-text="brand.headerCta"></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="hero-kicker"><span data-text="hero.kicker"></span><span class="hero-badge" data-text="hero.badge"></span></p>
+        <h1 id="hero-title"></h1>
+        <p class="hero-sub" id="hero-sub"></p>
+        <p class="hero-slogan" data-text="hero.slogan"></p>
+        <div class="hero-actions">
+          <a class="btn" data-join href="#join"><span data-text="hero.cta"></span><span class="btn-arrow" aria-hidden="true">→</span></a>
+          <a class="host" href="#leader" style="text-decoration:none">
+            <img class="js-leader-photo" alt="">
+            <p><b data-text="hero.hostName"></b><span data-text="hero.hostRole"></span></p>
+          </a>
+        </div>
+      </div>
+      <div class="card-stage" aria-hidden="true">
+        <div class="mcard">
+          <canvas class="mcard-net" id="net"></canvas>
+          <div class="mcard-top">
+            <p class="mcard-brand"><span data-text="card.brand"></span><small data-text="card.brandEn"></small></p>
+            <span class="mcard-chip"></span>
+          </div>
+          <div class="mcard-bottom">
+            <p class="mcard-name" data-text="card.line"></p>
+            <p class="mcard-meta"><span data-text="card.metaLabel"></span><b data-text="card.metaValue"></b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Community Leader (About) -->
+  <section class="section" id="leader" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><span class="label" data-text="leader.label"></span></div>
+      <div class="leader">
+        <figure class="leader-photo">
+          <img class="js-leader-photo" id="leader-photo" alt="">
+          <figcaption data-text="leader.photoCaption"></figcaption>
+        </figure>
+        <div class="leader-body">
+          <div>
+            <p class="leader-role" data-text="leader.role"></p>
+            <h2 class="leader-name" data-text="leader.name"></h2>
+          </div>
+          <p class="leader-tagline" data-text="leader.tagline"></p>
+          <div class="leader-bio" id="leader-bio"></div>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="leader-more">
+        <blockquote class="quote" style="margin:0">
+          <p id="leader-quote"></p>
+          <cite data-text="leader.quoteBy"></cite>
+        </blockquote>
+        <div class="career" id="career"></div>
+      </div>
+      <div class="footprints">
+        <div class="head">
+          <span class="label" data-text="gallery.label"></span>
+          <h2 class="title" data-text="gallery.title"></h2>
+          <p class="lead" data-text="gallery.lead"></p>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Members (typographic band) -->
+  <section class="section" id="members" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" data-text="members.label"></span>
+        <p class="lead" data-text="members.lead"></p>
+      </div>
+      <ul class="fields" id="fields"></ul>
+    </div>
+  </section>
+
+  <!-- 3. Benefits -->
+  <section class="section" id="benefits" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" data-text="benefits.label"></span>
+        <h2 class="title" data-text="benefits.title"></h2>
+      </div>
+      <ul class="benefits" id="benefits-list"></ul>
+    </div>
+  </section>
+
+  <!-- 4. Programs -->
+  <section class="section" id="programs" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" data-text="programs.label"></span>
+        <h2 class="title" data-text="programs.title"></h2>
+        <p class="lead" data-text="programs.lead"></p>
+      </div>
+      <div class="bento" id="bento"></div>
+    </div>
+  </section>
+
+  <!-- 6. Participation -->
+  <section class="section" id="participation" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" data-text="participation.label"></span>
+        <h2 class="title" data-text="participation.title"></h2>
+        <p class="lead" data-text="participation.lead"></p>
+      </div>
+      <div class="keys" id="keys"></div>
+      <div class="rules">
+        <div>
+          <span class="label" data-text="participation.rulesLabel"></span>
+          <h3 data-text="participation.rulesTitle"></h3>
+        </div>
+        <ul id="rules"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Membership -->
+  <section class="section" id="membership" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" data-text="membership.label"></span>
+        <h2 class="title" data-text="membership.title"></h2>
+      </div>
+      <div class="ticket">
+        <div class="ticket-main">
+          <p class="ticket-month" data-text="membership.month"></p>
+          <p class="ticket-price ticket-price--kr" data-text="membership.headline"></p>
+          <p class="ticket-cap" data-text="membership.caption"></p>
+          <p class="ticket-until" data-text="membership.until"></p>
+        </div>
+        <ul class="ticket-side" id="ticket-notes"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Final CTA -->
+  <section class="section" id="join" style="padding-top:0">
+    <div class="wrap">
+      <div class="final">
+        <div>
+          <span class="label" data-text="final.label"></span>
+          <h2 data-text="final.title"></h2>
+          <a class="btn btn--light" data-join href="#join"><span data-text="final.cta"></span><span class="btn-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="contact" id="contact"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap"><span data-text="footer.left"></span><span data-text="footer.right"></span></div>
+</footer>
+
+<script>
+/* =========================================================
+   스텝업클럽 랜딩페이지 문구
+   - 텍스트 수정은 이 CONTENT 객체만 고치면 됩니다.
+   - [[ ]] 로 감싼 부분은 초록색 강조로 표시됩니다.
+   - 연락처·링크는 맨 아래 contact 에 입력하세요. 비우면 "입력 예정"으로 보입니다.
+   ========================================================= */
+const CONTENT = {
+  // name: 정식 명칭 / short: 약칭 (모바일 상단 바에 표시)
+  brand: { name: "STEP UP CLUB", short: "STEP UP CLUB", headerCta: "참여하기" },
+
+  nav: [
+    { label: "리더", href: "#leader" },
+    { label: "혜택", href: "#benefits" },
+    { label: "활동", href: "#programs" },
+    { label: "참여 기준", href: "#participation" },
+    { label: "멤버십", href: "#membership" }
+  ],
+
+  hero: {
+    kicker: "스텝업클럽",
+    title: "STEP UP CLUB",
+    subtitle: "함께 한 단계씩 성장하는 사람들의 소셜클럽",   // 제목 아래 한 줄 (비우면 표시 안 됨)
+    slogan: "좋은 사람들이 서로 연결되고, 그 연결이 새로운 기회로 이어지는 공간",
+    cta: "스텝업클럽 참여하기",
+    badge: "2026 파운딩 패스 · 입회비 없이 합류",
+    hostName: "Hosted by 서진욱",
+    hostRole: "대한청년일보 대표 · 스텝업마케팅 대표"
+  },
+
+  // 히어로 회원카드
+  card: {
+    brand: "STEP UP CLUB",
+    brandEn: "스텝업클럽",
+    line: "Member",
+    metaLabel: "FOUNDING MEMBER",
+    metaValue: "2026"
+  },
+
+  // 커뮤니티 리더 (사진 파일은 이 HTML과 같은 폴더의 leader.jpg)
+  // 리더가 만들어온 자리들 (사진 갤러리) — 첫 번째 사진이 크게 표시됩니다
+  // pos: 사진에서 보여줄 위치 (object-position), 비우면 가운데 / href: 누르면 열릴 링크 (기사 등)
+  gallery: {
+    label: "Footprints",
+    title: "서진욱이 만들어온 자리들",
+    lead: "청년창업 커뮤니티부터 강의와 업무협약까지. 스텝업클럽은 이 시간들 위에서 시작합니다.",
+    items: [
+      { src: "gallery/g1-erum-3rd.jpg", title: "이룸그룹 3주년 축하 파티", year: "2018" },
+      { src: "gallery/g2-growth-meetup.jpg", title: "성장하는 남녀들의 모임", year: "2025", href: "https://www.koreayouthdaily.com/news/426327" },
+      { src: "gallery/g3-baewha-lecture.jpg", title: "배화여대 강의", year: "2024", pos: "50% 62%" },
+      { src: "gallery/g4-press-briefing.jpg", title: "대한청년일보 기자단 설명회", year: "2026", href: "https://www.koreayouthdaily.com/news/459736" },
+      { src: "gallery/g5-showmetheai.jpg", title: "SHOW ME THE AI 업무협약", year: "2026", pos: "50% 40%" },
+      { src: "gallery/g6-x20-ideathon.jpg", title: "X20 아이디어톤 수상", year: "2017", pos: "50% 55%" }
+    ]
+  },
+  leader: {
+    label: "Community Leader",
+    photo: "leader.jpg",
+    photoCaption: "커뮤니티 리더 · 서진욱",
+    role: "커뮤니티 리더",
+    name: "서진욱",
+    tagline: "사람을 모으고, 연결하고, 새로운 흐름을 빠르게 사업으로 만드는 커뮤니티 빌더",
+    bio: [
+      "약 10년간 창업·마케팅·콘텐츠·커뮤니티 현장에서 활동하며 다양한 사업가, 전문가, 직장인들과 관계를 쌓아왔습니다. 스레드 1만 팔로워 인플루언서로 활동하며 ‘성장하는 남녀들의 모임’을 비롯한 네트워킹·성장모임을 직접 기획·운영했습니다.",
+      "현재 대한청년일보 대표로 약 25명의 기자단 네트워크를 운영하며, 사람들의 활동과 이야기를 인터뷰·기사·콘텐츠로 연결하고 있습니다. 또한 GEO(Generative Engine Optimization), AI 검색 노출, 생성형 AI 마케팅 등 AI 분야의 신사업을 총괄하고 있습니다.",
+      "스텝업클럽은 이 경험과 네트워크를 바탕으로, 단순한 친목 모임이 아니라 좋은 사람과 새로운 정보·기회·트렌드가 함께 연결되는 공간을 목표로 합니다."
+    ],
+    // 숫자형 신뢰지표: value 뒤 unit 은 작게 표시
+    stats: [
+      { value: "10+", unit: "년", label: "창업·마케팅·커뮤니티 활동" },
+      { value: "1만+", unit: "", label: "스레드 팔로워" },
+      { value: "25", unit: "명", label: "대한청년일보 기자단" },
+      { value: "100", unit: "회+", label: "오프라인 커뮤니티·행사 기획" },
+      { value: "GEO·AI", unit: "", label: "AI 분야 신사업 총괄" }
+    ],
+    quote: "사람 수보다 [[관계의 질과 신뢰]]를 중요하게 생각합니다. 좋은 사람과 새로운 기회를 연결하는 것, 그게 스텝업클럽입니다.",
+    quoteBy: "— 서진욱, 커뮤니티 리더",
+    career: [
+      {
+        title: "Now",
+        items: [
+          { name: "대한청년일보 대표", note: "기자단 약 25명 운영" },
+          { name: "스텝업마케팅 대표" },
+          { name: "스레드 1만 팔로워 인플루언서" },
+          { name: "GEO·AI 분야 신사업 총괄", note: "생성형 AI 기반 차세대 마케팅" }
+        ]
+      },
+      {
+        title: "Career",
+        items: [
+          { name: "‘성장하는 남녀들의 모임’ 등", note: "100회 이상의 오프라인 커뮤니티·행사 기획" },
+          { name: "베스트셀러 공동 저자", note: "《이번 생은 망했다. 다음 생에나 책 읽자》" },
+          { name: "메가존 Project Manager" },
+          { name: "에듀테크 플랫폼 스쿨로직 창업 멤버" },
+          { name: "창업보육전문매니저" }
+        ]
+      }
+    ]
+  },
+
+  members: {
+    label: "Members",
+    lead: "다양한 분야의 사람들이 참여합니다.",
+    fields: ["사업가", "직장인", "전문직", "강사", "크리에이터", "IT", "마케팅", "스포츠", "웰니스"]
+  },
+
+  benefits: {
+    label: "Benefits",
+    title: "회원이 되면 이런 것들이 열립니다",
+    // icon: people | ticket | handshake | news | mic | gift   /  desc: 카드 아래 한 줄 설명  /  feature: true 면 강조 카드
+    items: [
+      { icon: "people", tag: "네트워크", title: "좋은 사람과 네트워크 연결", desc: "사업가·직장인·전문직 등 다양한 분야의 사람들과 신뢰를 바탕으로 연결됩니다." },
+      { icon: "ticket", tag: "회원가", title: "스텝업클럽 강의·강연·행사 회원가", desc: "클럽에서 열리는 모든 프로그램에 회원 전용 가격으로 참여합니다." },
+      { icon: "handshake", tag: "협업", title: "협업 및 프로젝트 기회 공유", desc: "회원들의 새로운 프로젝트와 협업 제안을 가장 먼저 공유받습니다." },
+      { icon: "news", tag: "대한청년일보", title: "스텝업클럽 강의·강연자로 참여 시 대한청년일보 기사 지원", desc: "무대에 선 회원의 전문성과 이야기를 기사로 기록하고 알립니다.", feature: true },
+      { icon: "mic", tag: "콘텐츠", title: "의미 있는 활동의 인터뷰·기사·콘텐츠 연계", desc: "회원의 활동이 더 많은 사람에게 닿도록 인터뷰와 콘텐츠로 이어 줍니다." },
+      { icon: "gift", tag: "제휴", title: "제휴 할인 및 회원 전용 혜택", desc: "제휴 브랜드 할인과 회원만을 위한 특별한 혜택을 누립니다." }
+    ]
+  },
+
+  programs: {
+    label: "Activities",
+    title: "함께 성장하는 시간",
+    lead: "강의, 문화생활, 독서모임 등 성장에 도움이 되는 활동을 회원들과 함께합니다.",
+    main: {
+      status: "Class & Talk",
+      title: "강의·클래스",
+      desc: "각 분야의 전문가와 회원이 직접 연사로 나서는 실전형 강의",
+      topicsLabel: "이런 주제를 다룹니다",
+      topics: ["바이브코딩", "생성형 AI", "재테크", "PR·퍼스널브랜딩", "세금·회계"]
+    },
+    items: [
+      { status: "Reading", title: "독서모임", desc: "한 권의 책으로 생각을 넓히는 시간" },
+      { status: "Culture", title: "문화생활", desc: "전시·공연·미식을 함께 즐기는 시간" },
+      { status: "Networking", title: "네트워킹", desc: "새로운 사람과 기회를 만나는 자리" },
+      { status: "Project", title: "스터디·협업", desc: "관심사가 맞는 회원끼리 함께 만드는 프로젝트" }
+    ]
+  },
+
+  participation: {
+    label: "Who We Welcome",
+    title: "초대와 신뢰로 만들어지는 클럽",
+    lead: "스텝업클럽은 누구나 들어오는 공개 모임이 아닙니다. 서로를 믿을 수 있는 사람들과 함께하기 위해, 아래 기준으로 회원을 맞이합니다.",
+    keys: [
+      { en: "Meet", title: "리더와의 만남", desc: "커뮤니티 리더와 직접 만나 이야기를 나눈 분" },
+      { en: "Referral", title: "회원의 추천", desc: "기존 회원이 신뢰를 걸고 소개한 분" },
+      { en: "Proof", title: "증명된 활동", desc: "SNS·포트폴리오·기사로 자신의 활동을 보여줄 수 있는 분" },
+      { en: "Give First", title: "먼저 나누는 태도", desc: "영업보다 관계를, 거래보다 기여를 먼저 생각하는 분" }
+    ],
+    rulesLabel: "Club Principles",
+    rulesTitle: "스텝업클럽이 지키는 원칙",
+    rules: [
+      "영업·홍보만을 위한 참여는 받지 않습니다",
+      "회원 간의 신뢰를 해치는 행동은 함께할 수 없습니다",
+      "사기성·과장성 투자 제안은 허용하지 않습니다"
+    ]
+  },
+
+  membership: {
+    label: "Membership",
+    title: "멤버십 안내",
+    month: "FOUNDING MEMBER · 2026",
+    headline: "Founding Pass",
+    caption: "2026년에 함께하는 파운딩 멤버는 입회비 없이 합류합니다.",
+    until: "VALID THROUGH 2026.12.31",
+    notes: [
+      { title: "강의·강연·모임은 별도 참가비", desc: "프로그램마다 참가비가 따로 안내됩니다." },
+      { title: "스텝업클럽 회원가 별도 적용", desc: "강의·강연·행사에 회원 전용 가격으로 참여할 수 있습니다." }
+    ]
+  },
+
+  final: {
+    label: "Join",
+    title: "좋은 사람과 새로운 기회가 연결되는 곳",
+    cta: "스텝업클럽 참여하기"
+  },
+
+  // ▼ 연락처·링크 (비워둔 항목은 화면에 표시되지 않습니다)
+  contact: {
+    leader: "커뮤니티 리더 서진욱",
+    phone: "010-9123-2789",
+    kakaoId: "seojinuk1105",
+    instagram: "ceo_jinuk",   // 아이디만 입력
+    threads: "ceo_jinuk",     // 아이디만 입력
+    email: "",
+    openChatUrl: "https://open.kakao.com/o/gyQiphSi"   // 예: "https://open.kakao.com/o/xxxx" ← 입력하면 모든 '참여하기' 버튼이 이 링크로 연결
+  },
+
+  footer: { left: "© 2026 STEP UP CLUB | 스텝업클럽", right: "함께 한 단계씩 성장하는 사람들의 소셜클럽" }
+};
+
+/* ===================== 렌더링 (수정 불필요) ===================== */
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const get = (p) => p.split(".").reduce((o, k) => (o ? o[k] : undefined), CONTENT);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const rich = (s) => esc(s).replace(/\[\[(.+?)\]\]/g, "<em>$1</em>").replace(/\n/g, "<br>");
+
+  document.querySelectorAll("[data-text]").forEach((el) => { const v = get(el.dataset.text); if (v != null) el.textContent = v; });
+
+  $("#hero-title").innerHTML = rich(CONTENT.hero.title);
+  $("#hero-sub").innerHTML = rich(CONTENT.hero.subtitle);
+  $("#hero-sub").hidden = !CONTENT.hero.subtitle;
+  $("#nav").innerHTML = CONTENT.nav.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join("");
+  // 리더
+  $("#gallery").innerHTML = CONTENT.gallery.items.map((g, i) =>
+    `<figure class="shot${i === 0 ? " shot--big" : ""}">${g.href ? `<a href="${esc(g.href)}" target="_blank" rel="noopener" aria-label="${esc(g.title)} 기사 보기">` : ""}<img src="${esc(g.src)}" alt="${esc(g.title)}" loading="lazy"${g.pos ? ` style="object-position:${esc(g.pos)}"` : ""}><figcaption>${esc(g.title)}${g.year ? `<span>${esc(g.year)}</span>` : ""}${g.href ? `<span class="shot-link">기사 보기 ↗</span>` : ""}</figcaption>${g.href ? "</a>" : ""}</figure>`
+  ).join("");
+  const L = CONTENT.leader;
+  document.querySelectorAll(".js-leader-photo").forEach((img) => { img.src = L.photo; });
+  $("#leader-photo").alt = L.name + " 사진";
+  $("#leader-bio").innerHTML = L.bio.map((p) => `<p>${rich(p)}</p>`).join("");
+  $("#stats").innerHTML = L.stats.map((s) =>
+    `<div class="stat"><span class="stat-v">${esc(s.value)}${s.unit ? `<small>${esc(s.unit)}</small>` : ""}</span><span class="stat-k">${esc(s.label)}</span></div>`).join("");
+  $("#leader-quote").innerHTML = rich(L.quote);
+  $("#career").innerHTML = L.career.map((g) =>
+    `<div><h3>${esc(g.title)}</h3><ul>${g.items.map((i) => `<li><b>${esc(i.name)}</b>${i.note ? `<span>${esc(i.note)}</span>` : ""}</li>`).join("")}</ul></div>`).join("");
+  $("#fields").innerHTML = CONTENT.members.fields.map((f) => `<li>${esc(f)}</li>`).join("");
+
+  const ICONS = {
+    people: '<circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14c2.4.2 4 1.7 4.5 4.5"/>',
+    ticket: '<path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v8a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2z"/><path d="M14 6v12" stroke-dasharray="2 2"/>',
+    handshake: '<path d="M3 12l4-4 5 3 5-3 4 4"/><path d="M7 8v5l5 5 5-5V8"/>',
+    news: '<rect x="3" y="4" width="15" height="16" rx="2"/><path d="M18 8h3v10a2 2 0 0 1-2 2"/><path d="M7 9h7M7 13h7M7 17h4"/>',
+    mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+    gift: '<rect x="3" y="9" width="18" height="4" rx="1"/><path d="M5 13v8h14v-8M12 9v12M12 9C10 5 6.5 5.5 7.5 8 8 9 12 9 12 9zm0 0c2-4 5.5-3.5 4.5-1-.5 1-4.5 1-4.5 1z"/>'
+  };
+  const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>`;
+
+  $("#benefits-list").innerHTML = CONTENT.benefits.items.map((b) =>
+    `<li class="benefit${b.feature ? " benefit--feature" : ""}">
+       <span class="benefit-icon">${svg(b.icon)}</span>
+       <div><h3><span class="benefit-tag">${esc(b.tag)}</span>${esc(b.title)}</h3>${b.desc ? `<p class="benefit-desc">${esc(b.desc)}</p>` : ""}</div>
+     </li>`).join("");
+
+  const m = CONTENT.programs.main;
+  $("#bento").innerHTML =
+    `<article class="prog prog--main">
+       <div><span class="prog-status prog-en">${esc(m.status)}</span>
+         <h3 style="margin-top:22px">${esc(m.title)}</h3><p>${esc(m.desc)}</p></div>
+       <div class="topics">
+         <span class="topics-k">${esc(m.topicsLabel)}</span>
+         ${m.topics.map((t) => `<span class="topic">${esc(t)}</span>`).join("")}
+       </div>
+     </article>` +
+    CONTENT.programs.items.map((p) =>
+      `<article class="prog"><span class="prog-status prog-en">${esc(p.status)}</span><div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div></article>`).join("");
+
+  const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+  const CROSS = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>';
+  const crit = (arr, icon) => arr.map((t) => `<li><span class="crit-mark" aria-hidden="true">${icon}</span><span>${esc(t)}</span></li>`).join("");
+  const P = CONTENT.participation;
+  $("#keys").innerHTML = P.keys.map((k) =>
+    `<div class="key"><span class="key-en">${esc(k.en)}</span><div><h3>${esc(k.title)}</h3><p>${esc(k.desc)}</p></div></div>`).join("");
+  $("#rules").innerHTML = crit(P.rules, CROSS);
+
+  $("#ticket-notes").innerHTML = CONTENT.membership.notes.map((n) => `<li><b>${esc(n.title)}</b><span>${esc(n.desc)}</span></li>`).join("");
+
+  // 연락처
+  const c = CONTENT.contact;
+  const rows = [
+    { k: "문의", v: c.leader },
+    { k: "연락처", v: c.phone, copy: true },
+    { k: "카카오톡", v: c.kakaoId, copy: true },
+    { k: "인스타그램", v: c.instagram && "@" + c.instagram, href: c.instagram && "https://www.instagram.com/" + c.instagram },
+    { k: "스레드", v: c.threads && "@" + c.threads, href: c.threads && "https://www.threads.net/@" + c.threads },
+    { k: "이메일", v: c.email, copy: true }
+  ].filter((r) => r.v);
+  $("#contact").innerHTML = rows.map((r, i) => {
+    const val = r.href ? `<a href="${esc(r.href)}" target="_blank" rel="noopener">${esc(r.v)}</a>` : esc(r.v);
+    const btn = r.copy ? `<button type="button" class="copy-btn" id="copy-${i}" data-copy="${esc(r.v)}">복사</button>` : "<span></span>";
+    return `<div class="contact-row"><span class="contact-k">${esc(r.k)}</span><span class="contact-v">${val}</span>${btn}</div>`;
+  }).join("");
+  document.querySelectorAll(".copy-btn").forEach((b) => b.addEventListener("click", () => {
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(b.dataset.copy).then(() => { b.textContent = "복사됨"; setTimeout(() => (b.textContent = "복사"), 1500); }, fallback); } catch (e) { fallback(); }
+  }));
+
+  if (c.openChatUrl) document.querySelectorAll("[data-join]").forEach((a) => { a.href = c.openChatUrl; a.target = "_blank"; a.rel = "noopener"; });
+
+  // 회원카드 배경: 사람(점)과 연결(선) 그래픽, 정적 렌더
+  const cv = $("#net");
+  function drawNet() {
+    const r = cv.getBoundingClientRect(); if (!r.width) return;
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = r.width * dpr; cv.height = r.height * dpr;
+    const ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    const pts = Array.from({ length: 22 }, () => ({ x: r.width * (0.35 + rnd() * 0.65), y: r.height * rnd() }));
+    ctx.strokeStyle = "rgba(244,239,230,.16)"; ctx.lineWidth = 1;
+    pts.forEach((a, i) => pts.slice(i + 1).forEach((b) => { if (Math.hypot(a.x - b.x, a.y - b.y) < r.width * 0.22) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); } }));
+    pts.forEach((p, i) => { ctx.beginPath(); ctx.arc(p.x, p.y, i % 5 === 0 ? 2.6 : 1.6, 0, Math.PI * 2); ctx.fillStyle = i % 5 === 0 ? "#B9CDB0" : "rgba(244,239,230,.5)"; ctx.fill(); });
+  }
+  drawNet();
+  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawNet, 150); });
+})();
+</script>
